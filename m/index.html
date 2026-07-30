@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Girlfriend's Day</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Garamond&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #fff;
+            color: #000;
+            min-height: 100vh;
+        }
+        .root {
+            max-width: 1366px;
+            margin: 0 auto;
+            background: transparent;
+            min-height: 100vh;
+            position: relative;
+        }
+        /* navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid #f0e6ff;
+            padding: 0 20px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+        }
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            padding: 14px 0;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 17px;
+        }
+        .nav-list li {
+            cursor: pointer;
+            color: #5a4a7a;
+            transition: all 0.25s;
+            padding: 4px 8px;
+            border-radius: 30px;
+            font-family: 'Sacramento', cursive;
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
+        .nav-list li:hover {
+            background: rgba(255,255,255,0.4);
+            color: #3d2a5c;
+        }
+        .nav-list li.active {
+            color: #6c3cb0;
+            background: rgba(255,255,255,0.6);
+            box-shadow: 0 0 0 2px #d4bfff;
+        }
+
+        /* slides container */
+        .slides-container {
+            position: relative;
+            min-height: 80vh;
+        }
+
+        /* PAGE BACKGROUND - SAME IMAGE FOR ALL PAGES */
+        .slide {
+            display: none;
+            width: 100%;
+            padding: 30px 30px 70px;
+            position: relative;
+            min-height: 75vh;
+            transition: all 0.3s;
+            background-image: url('https://images.unsplash.com/photo-1588097257570-59b6f7360bfb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Semi-transparent overlay for readability */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: 0;
+        }
+
+        .slide-inner {
+            max-width: 1265px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0.6; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* content styles */
+        .main-heading {
+            font-family: 'Great Vibes', cursive;
+            font-size: 80px;
+            text-align: center;
+            color: #4a2a6a;
+            margin: 10px 0 0;
+            line-height: 1.2;
+            text-shadow: 0 2px 12px rgba(106, 46, 156, 0.08);
+        }
+        
+        .sub-heading {
+            font-family: 'Sacramento', cursive;
+            font-size: 45px;
+            text-align: center;
+            color: #8a4a9a;
+            letter-spacing: 1px;
+            margin-top: -5px;
+        }
+        
+        .page-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 80px;
+            text-align: center;
+            color: #4a2a6a;
+            margin: 10px 0 0;
+            line-height: 1.2;
+            text-shadow: 0 2px 12px rgba(106, 46, 156, 0.08);
+        }
+        .page-sub {
+            font-family: 'Sacramento', cursive;
+            font-size: 50px;
+            text-align: center;
+            color: #8a4a9a;
+            letter-spacing: 1px;
+        }
+        .highlight-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 72px;
+            color: #b84a7a;
+            text-shadow: 0 2px 12px rgba(184, 74, 122, 0.12);
+        }
+        .letter-wrapper {
+            position: relative;
+            max-width: 900px;
+            margin: 20px auto;
+            border-radius: 40px 12px 40px 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(164, 8, 104, 0.06);
+            border: 1px solid rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+        }
+        .letter-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .letter-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1;
+        }
+        .letter-text {
+            position: relative;
+            z-index: 2;
+            font-family: 'Garamond', 'Times New Roman', serif;
+            font-weight: 400;
+            font-size: 21px;
+            line-height: 1.9;
+            padding: 32px 36px;
+            text-align: center;
+            color: #1a0a1a;
+            letter-spacing: 0.4px;
+        }
+        .letter-text .signature {
+            font-family: 'Sacramento', cursive;
+            font-size: 52px;
+            color: #9a4a8a;
+            display: block;
+            margin-top: 16px;
+            letter-spacing: 1px;
+        }
+        .letter-text .great-vibes-heading {
+            font-family: 'Great Vibes', cursive;
+            font-size: 38px;
+            color: #6a3a8a;
+            display: block;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        .big-heart {
+            font-size: 120px;
+            text-align: center;
+            opacity: 0.25;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 26px;
+            font-weight: 700;
+            font-family: 'Sacramento', cursive;
+            color: #4a2a6a;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 10px 32px;
+            border: none;
+            border-radius: 60px;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 16px rgba(106, 46, 156, 0.10);
+            transition: all 0.25s;
+            border: 1px solid rgba(106, 46, 156, 0.10);
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+        .btn:hover {
+            background: #6c3cb0;
+            color: #fff;
+            box-shadow: 0 8px 28px rgba(106, 46, 156, 0.25);
+            transform: scale(1.02);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #8a5ab8;
+            color: #4a2a6a;
+        }
+        .btn-outline:hover {
+            background: #8a5ab8;
+            color: #fff;
+        }
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .polaroid {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(2px);
+            padding: 14px 14px 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 28px rgba(106, 46, 156, 0.08);
+            width: 200px;
+            text-align: center;
+            font-size: 14px;
+            color: #4a3a5a;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.7);
+            transition: all 0.3s;
+        }
+        .polaroid:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(106, 46, 156, 0.12);
+        }
+        .polaroid img {
+            width: 100%;
+            height: 160px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(145deg, #f0e6ff, #e6d6ff);
+        }
+        .polaroid:nth-child(2) img { background: linear-gradient(145deg, #ffe6f0, #ffd6e6); }
+        .polaroid:nth-child(3) img { background: linear-gradient(145deg, #e6f7ff, #d6efff); }
+        .polaroid span {
+            font-family: 'Sacramento', cursive;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .portrait-circle {
+            border-radius: 50%;
+            width: 220px;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(106, 46, 156, 0.10);
+            border: 4px solid rgba(255,255,255,0.6);
+            overflow: hidden;
+            background: linear-gradient(145deg, #f0e6ff, #e6d6ff);
+        }
+        .portrait-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .love-text {
+            max-width: 400px;
+            font-size: 30px;
+            font-family: 'Sacramento', cursive;
+            font-weight: 400;
+            text-align: center;
+            color: #4a2a6a;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(2px);
+            padding: 20px 28px;
+            border-radius: 60px 12px 60px 12px;
+            border: 1px solid rgba(255,255,255,0.6);
+            letter-spacing: 1px;
+        }
+        .giant-heart {
+            text-align: center;
+            font-size: 140px;
+            opacity: 0.20;
+            margin: 10px 0;
+            color: #d46a8a;
+        }
+        .mine-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 120px;
+            text-align: center;
+            color: #b84a7a;
+            text-shadow: 0 4px 24px rgba(184, 74, 122, 0.15);
+            margin-top: -30px;
+        }
+
+        /* Page 0 special text */
+        .just-for-you {
+            font-family: 'Sacramento', cursive;
+            font-size: 40px;
+            font-weight: 400;
+            color: #6a3a7a;
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(2px);
+            padding: 8px 24px;
+            border-radius: 60px;
+            display: inline-block;
+            margin: 0 auto;
+            border: 1px solid rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+        }
+
+        /* Page 3 You text */
+        .you-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 88px;
+            color: #b87a4a;
+        }
+
+        @media (max-width: 700px) {
+            .nav-list {
+                gap: 12px;
+                font-size: 13px;
+                flex-wrap: wrap;
+            }
+            .nav-list li {
+                font-size: 22px;
+            }
+            .main-heading { font-size: 46px; }
+            .page-title { font-size: 46px; }
+            .page-sub { font-size: 34px; }
+            .sub-heading { font-size: 32px; }
+            .highlight-text { font-size: 44px; }
+            .letter-text { font-size: 17px; padding: 20px 18px; }
+            .letter-wrapper { margin: 12px 0; }
+            .polaroid { width: 140px; }
+            .polaroid img { height: 110px; }
+            .polaroid span { font-size: 18px; }
+            .btn { font-size: 22px; padding: 8px 24px; }
+            .portrait-circle { width: 140px; height: 140px; }
+            .love-text { font-size: 22px; padding: 14px 18px; }
+            .mine-text { font-size: 70px; }
+            .letter-text .great-vibes-heading { font-size: 28px; }
+            .letter-text .signature { font-size: 38px; }
+            .you-text { font-size: 54px; }
+            .just-for-you { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+<div class="root">
+    <!-- navbar -->
+    <nav class="navbar">
+        <ul class="nav-list" id="navList">
+            <li data-page="0" class="active">Can</li>
+            <li data-page="1">I</li>
+            <li data-page="2">Call</li>
+            <li data-page="3">You</li>
+            <li data-page="4">Mine?</li>
+        </ul>
+    </nav>
+
+    <!-- slides -->
+    <div class="slides-container">
+        <!-- PAGE 0: Can -->
+        <div class="slide active" data-page="0">
+            <div class="slide-inner">
+                <div class="main-heading" style="color:#b84a7a;">Special delivery</div>
+                <div class="sub-heading" style="font-size:70px; color:#d46a8a;">💌</div>
+                <div style="text-align:center; margin:10px 0;">
+                    <span class="highlight-text" style="color:#8a4aaa;">Happy Girlfriend's Day</span>
+                </div>
+                <div style="text-align:center;">
+                    <span class="just-for-you">just for you &lt;3</span>
+                </div>
+                <div class="flex-center" style="margin-top:30px;">
+                    <span class="btn" data-next="1">next &gt;&gt;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 1: I (letter) -->
+        <div class="slide" data-page="1">
+            <div class="slide-inner">
+                <div class="main-heading" style="font-size:52px; color:#6a3a8a;"> My Love💗</div>
+                <div class="letter-wrapper">
+                    <div class="letter-overlay"></div>
+                    <div class="letter-text">
+                        <span class="great-vibes-heading"> A Letter for You ✨</span>
+                        Happy Girlfriend's Day, my love. ❤️<br><br>
+                        I don't think I say this enough, but thank you for being you. Thank you for your love, your patience, your kindness, and for making my life brighter just by being in it.<br><br>
+                        You make even the simplest moments feel special, and every day with you reminds me how lucky I am to call you mine. No matter where life takes us, I promise to keep choosing you, supporting you, and loving you with all my heart.<br><br>
+                        I hope you always know how beautiful, strong, and incredibly loved you are. You deserve the world, and I'll spend every day trying to give you a little piece of it.<br><br>
+                        Happy Girlfriend's Day, my beautiful girl.<br>
+                        <span class="signature">Forever yours</span>
+                    </div>
+                </div>
+                <div class="flex-center">
+                    <span class="btn" data-next="2">next &gt;&gt;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: Call (photos) -->
+        <div class="slide" data-page="2">
+            <div class="slide-inner">
+                <div class="main-heading" style="font-size:50px; color:#3a7a9a;">You're my always &amp; forever</div>
+                <div class="flex-center" style="margin:30px 0; gap:25px;">
+                    <div class="polaroid">
+                        <img src="PIC1.jpg" alt="your image">
+                        <span style="color:#6a3a7a;"></span>
+                    </div>
+                    <div class="polaroid">
+                        <img src="PIC2.jpg" alt="Shine bright">
+                        <span style="color:#7a4a6a;"></span>
+                    </div>
+                    <div class="polaroid">
+                        <img src="PIC3.jpg" alt="My star">
+                        <span style="color:#3a6a8a;"></span>
+                    </div>
+                </div>
+                <div class="flex-center">
+                    <span class="btn" data-next="3">next &gt;&gt;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: You -->
+        <div class="slide" data-page="3">
+            <div class="slide-inner">
+                <div style="text-align:center; margin:10px 0;">
+                    <span class="you-text">You</span>
+                </div>
+                <div class="flex-center" style="gap:30px;">
+                    <div class="portrait-circle">
+                        <img src="PIC4.jpg" alt="Portrait">
+                    </div>
+                    <div class="love-text">
+                        You are beautiful, strong, and incredibly loved.
+                    </div>
+                </div>
+                <div class="flex-center" style="margin-top:30px;">
+                    <span class="btn" data-next="4">next &gt;&gt;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: Mine? -->
+        <div class="slide" data-page="4">
+            <div class="slide-inner">
+                <div class="giant-heart">❤️</div>
+                <div class="mine-text">Mine?</div>
+                <div class="flex-center" style="margin-top:20px; gap:30px;">
+                    <span class="btn btn-outline" data-next="0">&lt; restart</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const slides = document.querySelectorAll('.slide');
+        const navItems = document.querySelectorAll('#navList li');
+        let currentPage = 0;
+
+        function showPage(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            const target = document.querySelector(`.slide[data-page="${index}"]`);
+            if (target) target.classList.add('active');
+
+            navItems.forEach(item => item.classList.remove('active'));
+            const navTarget = document.querySelector(`#navList li[data-page="${index}"]`);
+            if (navTarget) navTarget.classList.add('active');
+
+            currentPage = index;
+            document.querySelector('.slides-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const page = parseInt(this.getAttribute('data-page'), 10);
+                if (!isNaN(page)) showPage(page);
+            });
+        });
+
+        document.querySelectorAll('.btn').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const next = parseInt(this.getAttribute('data-next'), 10);
+                if (!isNaN(next)) showPage(next);
+            });
+        });
+
+        showPage(0);
+    })();
+</script>
+</body>
+</html>
